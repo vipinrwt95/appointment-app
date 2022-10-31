@@ -14,7 +14,7 @@ function saveToServer(event)
              
             axios
                  .post('https://crudcrud.com/api/ac1fb057ea654eac8879189488e01caa/NEWAPPOINTMENTS',userdetails)
-                 .then(res=>console.log(res))
+                 .then(res=>showOnScreen(res.data))
                  .catch(err=>console.log(err))
               
 }  
@@ -30,17 +30,35 @@ window.addEventListener("DOMContentLoaded",()=>{
    .catch((err)=>{console.log(err)
  })
 })
-
+//let ids=new Set();
 function showOnScreen(obj)
 {  //console.log(obj.name);
+   
+  
    let parentNode=document.getElementById('ListofUsers');
    let childnode=document.createElement('li');
-   childnode.className="list";
-   childnode.innerHTML=`${obj.name}  ${obj.email}<button id="delete">DELETE</button><button id="edit">EDIT</button>`;
+   childnode.id=obj._id;
+   childnode.innerHTML=`${obj.name}  ${obj.email}<button onclick="deleteuser('${obj._id}')">DELETE</button><button id="${obj.id}">EDIT</button>`;
    parentNode.appendChild(childnode);
 }
+function deleteuser(id)
+{  
+    axios.
+     delete(`https://crudcrud.com/api/ac1fb057ea654eac8879189488e01caa/NEWAPPOINTMENTS/${id}`)
+     .then((res)=>{
+        
+         removeUserFromScreen(id)
+         
+       })
+      .catch((err)=>console.log(err))
+}
 
-
+function removeUserFromScreen(userid)
+{
+  const parentNode=document.getElementById('ListofUsers');
+  const childnodetobedeleted=document.getElementById(userid);
+  parentNode.removeChild(childnodetobedeleted);
+}
 
  
 
