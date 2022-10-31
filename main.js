@@ -13,14 +13,14 @@ function saveToServer(event)
             //console.log(userdetails);
              
             axios
-                 .post('https://crudcrud.com/api/ac1fb057ea654eac8879189488e01caa/NEWAPPOINTMENTS',userdetails)
+                 .post('https://crudcrud.com/api/2649f357751748a88be5957aef89ec37/appointmnets',userdetails)
                  .then(res=>showOnScreen(res.data))
                  .catch(err=>console.log(err))
               
 }  
 window.addEventListener("DOMContentLoaded",()=>{
    axios.
-   get('https://crudcrud.com/api/ac1fb057ea654eac8879189488e01caa/NEWAPPOINTMENTS')
+   get('https://crudcrud.com/api/2649f357751748a88be5957aef89ec37/appointmnets')
    .then((res)=>{
       for(var i=0;i<res.data.length;i++)
       {
@@ -38,13 +38,13 @@ function showOnScreen(obj)
    let parentNode=document.getElementById('ListofUsers');
    let childnode=document.createElement('li');
    childnode.id=obj._id;
-   childnode.innerHTML=`${obj.name}  ${obj.email}<button onclick="deleteuser('${obj._id}')">DELETE</button><button id="${obj.id}">EDIT</button>`;
+   childnode.innerHTML=`${obj.name}  ${obj.email}<button onclick="deleteuser('${obj._id}')">DELETE</button><button onclick="edituser('${obj._id}','${obj.name}','${obj.email}') ">EDIT</button>`;
    parentNode.appendChild(childnode);
 }
 function deleteuser(id)
 {  
     axios.
-     delete(`https://crudcrud.com/api/ac1fb057ea654eac8879189488e01caa/NEWAPPOINTMENTS/${id}`)
+     delete(`https://crudcrud.com/api/2649f357751748a88be5957aef89ec37/appointmnets/${id}`)
      .then((res)=>{
         
          removeUserFromScreen(id)
@@ -52,6 +52,13 @@ function deleteuser(id)
        })
       .catch((err)=>console.log(err))
 }
+function edituser(userid,username,useremail)
+{  
+   document.getElementById('name').value=username;
+   document.getElementById('email').value=useremail;
+   deleteuser(userid);
+}
+
 
 function removeUserFromScreen(userid)
 {
